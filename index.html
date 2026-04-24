@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Torsten — Dashboard Q1 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"DM Sans",sans-serif;background:#F9F7F4;color:#2D2D2D;font-size:14px}
+.header{background:#2D2D2D;padding:0 28px;display:flex;align-items:center;justify-content:space-between;height:58px}
+.brand{font-family:"DM Mono",monospace;font-size:15px;font-weight:500;color:#F59901}
+.name-badge{background:#F59901;color:#2D2D2D;font-weight:600;font-size:13px;padding:5px 14px;border-radius:20px}
+.period{font-size:12px;color:#888}
+.tab-bar{background:#fff;border-bottom:1.5px solid #eee;display:flex;padding:0 28px;overflow-x:auto}
+.tab{padding:12px 18px;font-size:13px;font-weight:500;cursor:pointer;border-bottom:2.5px solid transparent;color:#999;white-space:nowrap;transition:all .15s}
+.tab.active{color:#F59901;border-bottom-color:#F59901}
+.tab:hover{color:#2D2D2D}
+.page{display:none;padding:22px 28px;max-width:1100px}
+.page.active{display:block}
+.sec{font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:#999;margin:20px 0 12px;display:flex;align-items:center;gap:8px}
+.sec::before{content:"";display:block;width:3px;height:14px;background:#F59901;border-radius:2px}
+.kgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:12px;margin-bottom:22px}
+.kpi{background:#fff;border-radius:12px;padding:15px 17px;border:1px solid #eee;position:relative;overflow:hidden}
+.kpi::after{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:#eee;border-radius:12px 12px 0 0}
+.kpi.acc::after{background:#F59901}
+.kpi.gd::after{background:#27ae60}
+.klabel{font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.kval{font-size:24px;font-weight:600;color:#2D2D2D;line-height:1.15}
+.ksub{font-size:11px;color:#bbb;margin-top:3px}
+.crow{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
+.cc{background:#fff;border-radius:12px;padding:17px;border:1px solid #eee}
+.cc.full{grid-column:1/-1}
+.ctitle{font-size:11px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px}
+.legend{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:8px;font-size:11px;color:#999}
+.legend span{display:flex;align-items:center;gap:4px}
+.dot{width:9px;height:9px;border-radius:2px;flex-shrink:0}
+table{width:100%;border-collapse:collapse;font-size:12px}
+thead th{background:#2D2D2D;color:#fff;padding:8px 10px;text-align:left;font-size:11px;font-weight:500;letter-spacing:.3px}
+tbody tr:nth-child(even){background:#fafafa}
+tbody tr:hover{background:#fff8ec}
+tbody td{padding:7px 10px;border-bottom:1px solid #f2f2f2}
+.pill{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600}
+.pg{background:#e8f5e9;color:#1b5e20}
+.po{background:#fff3e0;color:#e65100}
+.pr{background:#fce4ec;color:#ad1457}
+.pd{background:#2D2D2D;color:#F59901}
+.tr-tot td{border-top:2px solid #2D2D2D;background:#f4f4f4!important;font-weight:600}
+.scr{overflow-x:auto}
+small{color:#aaa;font-size:10px}
+@media(max-width:640px){.crow{grid-template-columns:1fr}.page{padding:14px}}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="brand">raamdecoratie.com</div>
+  <div class="name-badge">Torsten</div>
+  <div class="period">Q1 2026</div>
+</div>
+<div class="tab-bar">
+  <div class="tab active" onclick="showPage('ov',this)">Mijn Q1</div>
+  <div class="tab" onclick="showPage('mn',this)">Per maand</div>
+  <div class="tab" onclick="showPage('rg',this)">Per regio</div>
+  <div class="tab" onclick="showPage('nb',this)">Nabellen</div>
+</div>
+
+<div class="page active" id="page-ov">
+  <div class="sec">Q1 totaal — jouw resultaten</div>
+  <div class="kgrid">
+    <div class="kpi acc"><div class="klabel">Ingemeten</div><div class="kval">113</div><div class="ksub">Q1 2026</div></div>
+    <div class="kpi acc"><div class="klabel">Besteld</div><div class="kval">72</div><div class="ksub">van 113 metingen</div></div>
+    <div class="kpi acc"><div class="klabel">Conversie %</div><div class="kval" style="color:#F59901">63.7%</div><div class="ksub"><span style="color:#e74c3c;font-size:11px;font-weight:600">-10.9%</span> vs team</div></div>
+    <div class="kpi"><div class="klabel">Inmeet waarde</div><div class="kval" style="font-size:18px">€224.104</div><div class="ksub">Q1 2026</div></div>
+    <div class="kpi"><div class="klabel">Bestelde waarde</div><div class="kval" style="font-size:18px">€145.461</div><div class="ksub">Q1 2026</div></div>
+    <div class="kpi"><div class="klabel">Conv% waarde</div><div class="kval">64.9%</div><div class="ksub">besteld / ingemeten €</div></div>
+  </div>
+  <div class="crow">
+    <div class="cc">
+      <div class="ctitle">Besteld vs niet besteld — Q1</div>
+      <div style="position:relative;height:210px"><canvas id="cDonut"></canvas></div>
+    </div>
+    <div class="cc">
+      <div class="ctitle">Jouw conversie vs team gemiddelde</div>
+      <div class="legend"><span><span class="dot" style="background:#F59901"></span>Jij</span><span><span class="dot" style="border:2px dashed #2D2D2D;background:transparent"></span>Team</span></div>
+      <div style="position:relative;height:210px"><canvas id="cLine"></canvas></div>
+    </div>
+  </div>
+  <div class="crow">
+    <div class="cc">
+      <div class="ctitle">Waarde ingemeten vs besteld per maand</div>
+      <div class="legend"><span><span class="dot" style="background:#F9CD92"></span>Ingemeten</span><span><span class="dot" style="background:#F59901"></span>Besteld</span></div>
+      <div style="position:relative;height:210px"><canvas id="cWaarde"></canvas></div>
+    </div>
+    <div class="cc">
+      <div class="ctitle">Samenvatting per maand</div>
+      <table>
+        <thead><tr><th>Maand</th><th>Ing.</th><th>Best.</th><th>Conv%</th><th>vs team</th></tr></thead>
+        <tbody>
+          <tr><td>Januari</td><td>37</td><td>28</td><td><span class="pill po">75.7%</span></td><td><span style="color:#e74c3c;font-size:11px;font-weight:600">-0.9%</span></td></tr>
+          <tr><td>Februari</td><td>51</td><td>27</td><td><span class="pill po">52.9%</span></td><td><span style="color:#e74c3c;font-size:11px;font-weight:600">-19.4%</span></td></tr>
+          <tr><td>Maart</td><td>25</td><td>17</td><td><span class="pill po">68.0%</span></td><td><span style="color:#e74c3c;font-size:11px;font-weight:600">-7.4%</span></td></tr>
+          <tr class="tr-tot"><td>Q1</td><td>113</td><td>72</td><td><span class="pill pd">63.7%</span></td><td><span style="color:#e74c3c;font-size:11px;font-weight:600">-10.9%</span></td></tr>
+        </tbody>
+      </table>
+      <div style="margin-top:10px;padding-top:8px;border-top:1.5px dashed #F59901;font-size:11px;color:#F59901;font-weight:600">Team Q1 gemiddelde: 74.6%</div>
+    </div>
+  </div>
+</div>
+
+<div class="page" id="page-mn">
+  <div class="sec">Conversie per maand — detail</div>
+  <div class="crow"><div class="cc full">
+    <div class="ctitle">Ingemeten vs besteld per maand</div>
+    <div class="legend"><span><span class="dot" style="background:#F59901"></span>Besteld</span><span><span class="dot" style="background:#2D2D2D"></span>Niet besteld</span></div>
+    <div style="position:relative;height:250px"><canvas id="cBar"></canvas></div>
+  </div></div>
+  <div class="crow"><div class="chart-card">
+      <div class="chart-title">Januari</div>
+      <div style="font-size:30px;font-weight:600;color:#2D2D2D;margin-bottom:2px">75.7%</div>
+      <div style="font-size:11px;color:#999;margin-bottom:12px">Team gem: 76.6% &nbsp; <span style="color:#e74c3c;font-size:11px;font-weight:600">-0.9%</span></div>
+      <table style="font-size:12px">
+        <tr><td style="color:#999;padding:3px 0">Ingemeten</td><td style="text-align:right;font-weight:600">37</td></tr>
+        <tr><td style="color:#999;padding:3px 0">Besteld</td><td style="text-align:right;font-weight:600;color:#F59901">28</td></tr>
+        <tr><td style="color:#999;padding:3px 0">Niet besteld</td><td style="text-align:right">9</td></tr>
+        <tr><td style="color:#999;padding:3px 0">Inmeet waarde</td><td style="text-align:right;font-weight:600">€69.110</td></tr>
+        <tr><td style="color:#999;padding:3px 0">Bestelde waarde</td><td style="text-align:right;font-weight:600">€52.108</td></tr>
+        <tr><td style="color:#999;padding:3px 0">Conv% waarde</td><td style="text-align:right">75.4%</td></tr>
+      </table>
+    </div><div class="chart-card">
+      <div class="chart-title">Februari</div>
+      <div style="font-size:30px;font-weight:600;color:#2D2D2D;margin-bottom:2px">52.9%</div>
+      <div style="font-size:11px;color:#999;margin-bottom:12px">Team gem: 72.3% &nbsp; <span style="color:#e74c3c;font-size:11px;font-weight:600">-19.4%</span></div>
+      <table style="font-size:12px">
+        <tr><td style="color:#999;padding:3px 0">Ingemeten</td><td style="text-align:right;font-weight:600">51</td></tr>
+        <tr><td style="color:#999;padding:3px 0">Besteld</td><td style="text-align:right;font-weight:600;color:#F59901">27</td></tr>
+        <tr><td style="color:#999;padding:3px 0">Niet besteld</td><td style="text-align:right">24</td></tr>
+        <tr><td style="color:#999;padding:3px 0">Inmeet waarde</td><td style="text-align:right;font-weight:600">€92.028</td></tr>
+        <tr><td style="color:#999;padding:3px 0">Bestelde waarde</td><td style="text-align:right;font-weight:600">€52.195</td></tr>
+        <tr><td style="color:#999;padding:3px 0">Conv% waarde</td><td style="text-align:right">56.7%</td></tr>
+      </table>
+    </div><div class="chart-card">
+      <div class="chart-title">Maart</div>
+      <div style="font-size:30px;font-weight:600;color:#2D2D2D;margin-bottom:2px">68.0%</div>
+      <div style="font-size:11px;color:#999;margin-bottom:12px">Team gem: 75.4% &nbsp; <span style="color:#e74c3c;font-size:11px;font-weight:600">-7.4%</span></div>
+      <table style="font-size:12px">
+        <tr><td style="color:#999;padding:3px 0">Ingemeten</td><td style="text-align:right;font-weight:600">25</td></tr>
+        <tr><td style="color:#999;padding:3px 0">Besteld</td><td style="text-align:right;font-weight:600;color:#F59901">17</td></tr>
+        <tr><td style="color:#999;padding:3px 0">Niet besteld</td><td style="text-align:right">8</td></tr>
+        <tr><td style="color:#999;padding:3px 0">Inmeet waarde</td><td style="text-align:right;font-weight:600">€62.965</td></tr>
+        <tr><td style="color:#999;padding:3px 0">Bestelde waarde</td><td style="text-align:right;font-weight:600">€41.157</td></tr>
+        <tr><td style="color:#999;padding:3px 0">Conv% waarde</td><td style="text-align:right">65.4%</td></tr>
+      </table>
+    </div></div>
+</div>
+
+<div class="page" id="page-rg">
+  <div class="sec">Jouw regio's — Q1 overzicht</div>
+  <div class="crow"><div class="cc full">
+    <div class="ctitle">Conversie % per provincie (Q1)</div>
+    <div style="position:relative;height:396px"><canvas id="cProv"></canvas></div>
+  </div></div>
+  <div class="sec">Detail per provincie per maand</div>
+  <div class="scr"><table>
+    <thead><tr><th>Provincie</th><th>Januari</th><th>Februari</th><th>Maart</th><th>Q1 totaal</th></tr></thead>
+    <tbody><tr><td><strong>Noord-Holland</strong></td><td><span class="pill pr">57.1%</span> <small>4/7</small></td><td><span class="pill po">69.2%</span> <small>9/13</small></td><td><span class="pill pr">64.3%</span> <small>9/14</small></td><td><span class="pill pr">64.7%</span> <small>22/34</small></td></tr>
+<tr><td><strong>Zuid-Holland</strong></td><td><span class="pill pg">91.7%</span> <small>11/12</small></td><td><span class="pill pr">50.0%</span> <small>5/10</small></td><td><span class="pill pg">80.0%</span> <small>4/5</small></td><td><span class="pill po">74.1%</span> <small>20/27</small></td></tr>
+<tr><td><strong>Utrecht</strong></td><td><span class="pill pg">75.0%</span> <small>9/12</small></td><td><span class="pill pr">40.0%</span> <small>2/5</small></td><td><span class="pill pr">0.0%</span> <small>0/1</small></td><td><span class="pill pr">61.1%</span> <small>11/18</small></td></tr>
+<tr><td><strong>Overijssel</strong></td><td><span class="pill pg">100.0%</span> <small>2/2</small></td><td><span class="pill pr">45.5%</span> <small>5/11</small></td><td><span class="pill pg">100.0%</span> <small>1/1</small></td><td><span class="pill pr">57.1%</span> <small>8/14</small></td></tr>
+<tr><td><strong>Gelderland</strong></td><td style="color:#ccc">—</td><td><span class="pill pr">28.6%</span> <small>2/7</small></td><td style="color:#ccc">—</td><td><span class="pill pr">28.6%</span> <small>2/7</small></td></tr>
+<tr><td><strong>Flevoland</strong></td><td><span class="pill pg">100.0%</span> <small>1/1</small></td><td><span class="pill pr">50.0%</span> <small>1/2</small></td><td><span class="pill po">66.7%</span> <small>2/3</small></td><td><span class="pill po">66.7%</span> <small>4/6</small></td></tr>
+<tr><td><strong>Drenthe</strong></td><td style="color:#ccc">—</td><td style="color:#ccc">—</td><td><span class="pill pg">100.0%</span> <small>1/1</small></td><td><span class="pill pg">100.0%</span> <small>1/1</small></td></tr>
+<tr><td><strong>Frysl√¢n</strong></td><td style="color:#ccc">—</td><td><span class="pill pg">100.0%</span> <small>1/1</small></td><td style="color:#ccc">—</td><td><span class="pill pg">100.0%</span> <small>1/1</small></td></tr>
+</tbody>
+  </table></div>
+</div>
+
+<div class="page" id="page-nb">
+  <div class="sec">Nabellen — jouw resultaten</div>
+  <div class="kgrid">
+    <div class="kpi acc"><div class="klabel">Totaal benaderd</div><div class="kval">37</div><div class="ksub">Q1 2026</div></div>
+    <div class="kpi acc"><div class="klabel">Nabellen conversie</div><div class="kval">21.6%</div><div class="ksub">8 besteld na contact</div></div>
+  </div>
+  <div class="crow"><div class="cc full">
+    <div class="ctitle">Nabellen resultaat per maand</div>
+    <div class="legend"><span><span class="dot" style="background:#F59901"></span>Besteld na contact</span><span><span class="dot" style="background:#2D2D2D"></span>Niet besteld</span></div>
+    <div style="position:relative;height:220px"><canvas id="cNab"></canvas></div>
+  </div></div>
+  <div class="sec">Nabellen per maand</div>
+  <table>
+    <thead><tr><th>Maand</th><th>Benaderd</th><th>Besteld na contact</th><th>Niet besteld</th><th>Conv%</th></tr></thead>
+    <tbody><tr><td>Januari</td><td>8</td><td>2</td><td>6</td><td><span class="pill pr">25.0%</span></td></tr>
+<tr><td>Februari</td><td>23</td><td>5</td><td>18</td><td><span class="pill pr">21.7%</span></td></tr>
+<tr><td>Maart</td><td>6</td><td>1</td><td>5</td><td><span class="pill pr">16.7%</span></td></tr>
+<tr class="tr-tot"><td>Q1</td><td>37</td><td>8</td><td>29</td><td><span class="pill pd">21.6%</span></td></tr></tbody>
+  </table>
+  <div class="sec" style="margin-top:20px">Redenen geen bestelling</div>
+  <table>
+    <thead><tr><th>Reden</th><th>Januari</th><th>Februari</th><th>Maart</th><th>Totaal</th></tr></thead>
+    <tbody><tr><td>Geen gehoor</td><td>3</td><td>9</td><td>2</td><td><strong>14</strong></td></tr>
+<tr><td>Is er nog mee bezig</td><td>2</td><td>8</td><td>2</td><td><strong>12</strong></td></tr>
+<tr><td>Ziet ervan af</td><td>0</td><td>1</td><td>1</td><td><strong>2</strong></td></tr>
+<tr><td>Wacht op korting</td><td>1</td><td>0</td><td>0</td><td><strong>1</strong></td></tr>
+</tbody>
+  </table>
+</div>
+
+<script>
+const O='#F59901',D='#2D2D2D',L='#F9CD92';
+const M=['Januari','Februari','Maart'];
+function showPage(id,el){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  el.classList.add('active');
+}
+new Chart(document.getElementById('cDonut'),{type:'doughnut',data:{labels:['Besteld','Niet besteld'],datasets:[{data:[72,41],backgroundColor:[O,D],borderWidth:3,borderColor:'#F9F7F4'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{size:11},boxWidth:12}}}}});
+new Chart(document.getElementById('cLine'),{type:'line',data:{labels:M,datasets:[{label:'Jij',data:[75.7, 52.9, 68.0],borderColor:O,backgroundColor:O+'33',tension:.35,pointRadius:6,pointBackgroundColor:O,borderWidth:2.5},{label:'Team',data:[76.6, 72.3, 75.4],borderColor:D,borderDash:[5,3],backgroundColor:'transparent',tension:.35,pointRadius:4,pointBackgroundColor:D,borderWidth:1.5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:40,max:100,grid:{color:'#f0f0f0'},ticks:{callback:v=>v+'%'}}}}});
+new Chart(document.getElementById('cWaarde'),{type:'bar',data:{labels:M,datasets:[{label:'Ingemeten',data:[69110, 92028, 62965],backgroundColor:L},{label:'Besteld',data:[52108, 52195, 41157],backgroundColor:O}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{grid:{color:'#f0f0f0'},ticks:{callback:v=>'€'+Math.round(v/1000)+'k'}}}}});
+new Chart(document.getElementById('cBar'),{type:'bar',data:{labels:M,datasets:[{label:'Besteld',data:[28, 27, 17],backgroundColor:O},{label:'Niet besteld',data:[9, 24, 8],backgroundColor:D}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{stacked:true},y:{stacked:true,grid:{color:'#f0f0f0'}}}}});
+const pL=["Noord-Holland", "Zuid-Holland", "Utrecht", "Overijssel", "Gelderland", "Flevoland", "Drenthe", "Frysl\u221a\u00a2n"];
+const pC=[64.7, 74.1, 61.1, 57.1, 28.6, 66.7, 100.0, 100.0];
+const pI=[34, 27, 18, 14, 7, 6, 1, 1];
+const pB=[22, 20, 11, 8, 2, 4, 1, 1];
+new Chart(document.getElementById('cProv'),{type:'bar',data:{labels:pL,datasets:[{label:'Conv%',data:pC,backgroundColor:pC.map(c=>c>=85?'#27ae60':c>=75?O:c>=65?'#f39c12':'#e74c3c')}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>pC[ctx.dataIndex]+'% ('+pB[ctx.dataIndex]+'/'+pI[ctx.dataIndex]+')'}}},scales:{x:{min:0,max:110,ticks:{callback:v=>v+'%'},grid:{color:'#f0f0f0'}},y:{ticks:{autoSkip:false}}}}});
+new Chart(document.getElementById('cNab'),{type:'bar',data:{labels:M,datasets:[{label:'Besteld na contact',data:[2, 5, 1],backgroundColor:O},{label:'Niet besteld',data:[6, 18, 5],backgroundColor:D}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{stacked:true},y:{stacked:true,grid:{color:'#f0f0f0'}}}}});
+</script>
+</body>
+</html>
